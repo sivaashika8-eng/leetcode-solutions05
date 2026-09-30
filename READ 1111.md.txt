@@ -1,0 +1,31 @@
+# 1111. Maximum Nesting Depth of Two Valid Parentheses Strings
+
+**Difficulty:** Medium
+
+## Problem
+Given a valid parentheses string `seq`, split it into two disjoint subsequences `A` and `B`, both valid parentheses strings, such that `max(depth(A), depth(B))` is minimized. Return an array where `answer[i] = 0` if `seq[i]` belongs to `A`, else `1`.
+
+## Approach
+Track the current nesting depth while scanning the string:
+- On `(`, increment depth and assign `depth % 2`.
+- On `)`, assign `depth % 2`, then decrement depth.
+
+Matching brackets share the same depth, so each pair goes into the same group and both groups stay valid. Alternating groups by depth level splits the nesting evenly, giving a max depth of `ceil(d / 2)`, which is optimal.
+
+## Solution
+```python
+class Solution:
+    def maxDepthAfterSplit(self, seq: str) -> list[int]:
+        ans = []
+        depth = 0
+        for c in seq:
+            if c == '(':
+                depth += 1
+                ans.append(depth % 2)
+            else:
+                ans.append(depth % 2)
+                depth -= 1
+        return ans
+```
+
+## Example
